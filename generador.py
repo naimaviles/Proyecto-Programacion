@@ -2,18 +2,6 @@ import string
 import random  
 
 def generar_contrasena(longitud, n_mayus, n_especiales, n_digitos):
-
-    if longitud <= 0:
-        raise ValueError("La longitud debe ser mayor que 0")
-    if n_mayus < 0 or n_especiales < 0 or n_digitos < 0:
-        raise ValueError("Las cantidades no pueden ser negativas")
-
-    minimo_requerido = n_mayus + n_especiales + n_digitos
-    if minimo_requerido > longitud:
-        raise ValueError(
-            f"No cuadra: {minimo_requerido} > longitud({longitud})"
-        )
-
     # Conjuntos de caracteres
     letras_mayus = string.ascii_uppercase
     letras_minus = string.ascii_lowercase
@@ -58,3 +46,4 @@ if __name__ == "__main__":
         print(password)
     except ValueError as err:
         print("\n[ERROR]", err)
+
