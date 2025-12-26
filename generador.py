@@ -33,17 +33,17 @@ def generar_contrasena(longitud, n_mayus, n_especiales, n_digitos):
     return "".join(chars)
 
 # Programa principal
-if __name__ == "__main__":
-    print("GENERADOR DE CONTRASEÑAS:")
-    L = int(input("Longitud total deseada: "))
-    M = int(input("Cantidad exacta de MAYÚSCULAS: "))
-    E = int(input("Cantidad exacta de caracteres ESPECIALES: "))
-    D = int(input("Cantidad exacta de DÍGITOS: "))
+print("GENERADOR DE CONTRASEÑAS:")
+L = int(input("Longitud total deseada: "))
+M = int(input("Cantidad exacta de MAYÚSCULAS: "))
+E = int(input("Cantidad exacta de caracteres ESPECIALES: "))
+D = int(input("Cantidad exacta de DÍGITOS: "))
 
-    try:
-        password = generar_contrasena(L, M, E, D)
-        print("\nContraseña generada:")
-        print(password)
-    except ValueError as err:
-        print("\n[ERROR]", err)
+try:
+    password = generar_contrasena(L, M, E, D)
+    print("\nContraseña generada:")
+    print(password)
+except ValueError as err:
+    print("\n[ERROR]", err)
+
 
