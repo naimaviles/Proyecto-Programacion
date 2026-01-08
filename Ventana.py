@@ -4,6 +4,7 @@ from tkinter import messagebox
 # Importamos las funciones del proyecto
 from generador import generar_contrasena
 from archivos import guardar_password, leer_password
+from validaciones import validar_datos   # ← VALIDACIONES
 
 
 def main():
@@ -30,25 +31,21 @@ def main():
         """Lee los datos, valida y genera la contraseña."""
         nonlocal password_actual
 
-        try:
-            L = int(entrada_longitud.get())
-            M = int(entrada_mayus.get())
-            E = int(entrada_especiales.get())
-            D = int(entrada_digitos.get())
-        except ValueError:
-            messagebox.showerror("Error", "Introduce números enteros válidos.")
+        # --- USAMOS VALIDACIONES ---
+        long = entrada_longitud.get()
+        may = entrada_mayus.get()
+        esp = entrada_especiales.get()
+        dig = entrada_digitos.get()
+
+        if not validar_datos(long, may, esp, dig):
+            messagebox.showerror("Error", "Datos no válidos. Revisa los campos.")
             return
 
-        # Validaciones básicas (robustez)
-        if L <= 0:
-            messagebox.showerror("Error", "La longitud debe ser mayor que 0.")
-            return
-        if min(M, E, D) < 0:
-            messagebox.showerror("Error", "No se permiten valores negativos.")
-            return
-        if M + E + D > L:
-            messagebox.showerror("Error", "La suma (mayús + especiales + dígitos) no puede superar la longitud.")
-            return
+        # Conversión segura (ya validado)
+        L = int(long)
+        M = int(may)
+        E = int(esp)
+        D = int(dig)
 
         # Generar contraseña
         password_actual = generar_contrasena(L, M, E, D)
@@ -119,7 +116,7 @@ def main():
         resultado_var.set("")
 
     # -------------------------
-    # Widgets (como en clase)
+    # Widgets
     # -------------------------
     titulo = tk.Label(
         ventana,
@@ -173,7 +170,6 @@ def main():
     tk.Button(frame_botones, text="Recuperar", command=recuperar, width=10).grid(row=0, column=2, padx=6)
     tk.Button(frame_botones, text="Borrar", command=borrar, width=10).grid(row=0, column=3, padx=6)
 
-    # Mantener la ventana abierta
     ventana.mainloop()
 
 
