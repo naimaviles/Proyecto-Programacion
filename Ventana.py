@@ -14,10 +14,14 @@ class App(tk.Tk):
         self.geometry("520x360")
         self.resizable(False, False)
 
+        # (Opcional pero recomendado en Mac) Forzar un tema visible
+        style = ttk.Style(self)
+        style.theme_use("clam")
+
         # Guardamos aquí la contraseña generada “actual”
         self.password_actual = ""
 
-        # Variables de Tkinter: ayudan a leer/escribir lo que pone en las casillas
+        # Variables de Tkinter
         self.var_longitud = tk.StringVar(value="12")
         self.var_mayus = tk.StringVar(value="2")
         self.var_especiales = tk.StringVar(value="2")
@@ -28,7 +32,7 @@ class App(tk.Tk):
         self.crear_widgets()
 
     def crear_widgets(self):
-        # Frame = “caja” para ordenar cosas dentro de la ventana
+        # Frame principal
         main = ttk.Frame(self, padding=14)
         main.pack(fill="both", expand=True)
 
@@ -43,7 +47,7 @@ class App(tk.Tk):
         self.fila(main, "Nº dígitos:", self.var_digitos, 4)
         self.fila(main, "Nombre del archivo:", self.var_archivo, 5)
 
-        # Resultado (readonly para que se vea pero no se edite)
+        # Resultado
         ttk.Label(main, text="Contraseña generada:").grid(row=6, column=0, sticky="w", pady=(12, 4))
         ttk.Entry(main, textvariable=self.var_resultado, state="readonly", width=40).grid(
             row=7, column=0, columnspan=2, sticky="we"
@@ -61,12 +65,11 @@ class App(tk.Tk):
         main.columnconfigure(1, weight=1)
 
     def fila(self, parent, texto, variable, row):
-        # Crea una fila: etiqueta + cajita de escribir
         ttk.Label(parent, text=texto).grid(row=row, column=0, sticky="w", pady=4)
         ttk.Entry(parent, textvariable=variable, width=24).grid(row=row, column=1, sticky="w", pady=4)
 
     def generar(self):
-        # 1) Convertimos las entradas a números
+        # Convertimos entradas a números
         try:
             L = int(self.var_longitud.get())
             M = int(self.var_mayus.get())
@@ -76,7 +79,7 @@ class App(tk.Tk):
             messagebox.showerror("Error", "Longitud, mayúsculas, especiales y dígitos deben ser números enteros.")
             return
 
-        # 2) Validaciones básicas (robustez)
+        # Validaciones básicas
         if L <= 0:
             messagebox.showerror("Error", "La longitud debe ser mayor que 0.")
             return
@@ -87,10 +90,8 @@ class App(tk.Tk):
             messagebox.showerror("Error", "La suma (mayús + especiales + dígitos) no puede superar la longitud.")
             return
 
-        # 3) Llamamos a la función del generador
+        # Generar y mostrar
         self.password_actual = generar_contrasena(L, M, E, D)
-
-        # 4) Mostramos el resultado en la interfaz
         self.var_resultado.set(self.password_actual)
 
     def guardar(self):
@@ -127,7 +128,6 @@ class App(tk.Tk):
             messagebox.showerror("Error", f"No se pudo leer.\n\nDetalle: {e}")
 
     def borrar(self):
-        # Deja todo “como al principio”
         self.var_longitud.set("12")
         self.var_mayus.set("2")
         self.var_especiales.set("2")
@@ -140,6 +140,3 @@ class App(tk.Tk):
 if __name__ == "__main__":
     app = App()
     app.mainloop()
-
-
-
