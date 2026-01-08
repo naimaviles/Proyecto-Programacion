@@ -70,4 +70,3 @@ Ejecutar el siguiente comando desde la carpeta del proyecto:
 
 ```bash
 python ventana.py
-``
