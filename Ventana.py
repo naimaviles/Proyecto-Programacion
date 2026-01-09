@@ -1,16 +1,14 @@
 import tkinter as tk
 from tkinter import messagebox
 
-# Importamos las funciones del proyecto
+#Importamos las funciones del proyecto
 from generador import generar_contrasena
 from archivos import guardar_password, leer_password
-from validaciones import validar_datos   # ← VALIDACIONES
+from validaciones import validar_datos   
 
 
 def main():
-    # -------------------------
-    # Ventana principal
-    # -------------------------
+    #Ventana principal
     ventana = tk.Tk()
     ventana.title("Generador de Contraseñas")
     ventana.geometry("520x380")
@@ -19,19 +17,17 @@ def main():
     BG_COLOR = "#E9A9F9"
     ventana.configure(bg=BG_COLOR)
 
-    password_actual = ""  # Aquí guardamos la última contraseña generada
+    password_actual = ""  #Aquí guardamos la última contraseña generada
 
-    # Variable donde mostraremos la contraseña generada
+    #Variable donde mostraremos la contraseña generada
     resultado_var = tk.StringVar(value="")
 
-    # -------------------------
     # Funciones de los botones
-    # -------------------------
     def generar():
         """Lee los datos, valida y genera la contraseña."""
         nonlocal password_actual
 
-        # --- USAMOS VALIDACIONES ---
+        #USAMOS VALIDACIONES
         long = entrada_longitud.get()
         may = entrada_mayus.get()
         esp = entrada_especiales.get()
@@ -41,16 +37,16 @@ def main():
             messagebox.showerror("Error", "Datos no válidos. Revisa los campos.")
             return
 
-        # Conversión segura (ya validado)
+        #Conversión segura (ya validado)
         L = int(long)
         M = int(may)
         E = int(esp)
         D = int(dig)
 
-        # Generar contraseña
+        #Generar contraseña
         password_actual = generar_contrasena(L, M, E, D)
 
-        # Mostrarla en la interfaz
+        #Mostrarla en la interfaz
         resultado_var.set(password_actual)
 
     def guardar():
@@ -115,9 +111,7 @@ def main():
         password_actual = ""
         resultado_var.set("")
 
-    # -------------------------
     # Widgets
-    # -------------------------
     titulo = tk.Label(
         ventana,
         text="Generador de Contraseñas",
@@ -126,42 +120,42 @@ def main():
     )
     titulo.pack(pady=(14, 10))
 
-    # Longitud
+    #Longitud
     tk.Label(ventana, text="Longitud total:", bg=BG_COLOR).pack()
     entrada_longitud = tk.Entry(ventana)
     entrada_longitud.pack()
     entrada_longitud.insert(0, "12")
 
-    # Mayúsculas
+    #Mayúsculas
     tk.Label(ventana, text="Nº mayúsculas:", bg=BG_COLOR).pack()
     entrada_mayus = tk.Entry(ventana)
     entrada_mayus.pack()
     entrada_mayus.insert(0, "2")
 
-    # Especiales
+    #Especiales
     tk.Label(ventana, text="Nº especiales:", bg=BG_COLOR).pack()
     entrada_especiales = tk.Entry(ventana)
     entrada_especiales.pack()
     entrada_especiales.insert(0, "2")
 
-    # Dígitos
+    #Dígitos
     tk.Label(ventana, text="Nº dígitos:", bg=BG_COLOR).pack()
     entrada_digitos = tk.Entry(ventana)
     entrada_digitos.pack()
     entrada_digitos.insert(0, "2")
 
-    # Archivo
+    #Archivo
     tk.Label(ventana, text="Nombre del archivo (ej: password.txt):", bg=BG_COLOR).pack(pady=(8, 0))
     entrada_archivo = tk.Entry(ventana)
     entrada_archivo.pack()
     entrada_archivo.insert(0, "password.txt")
 
-    # Resultado
+    #Resultado
     tk.Label(ventana, text="Contraseña generada:", bg=BG_COLOR).pack(pady=(12, 0))
     entrada_resultado = tk.Entry(ventana, textvariable=resultado_var, state="readonly", width=45)
     entrada_resultado.pack()
 
-    # Botones
+    #Botones
     frame_botones = tk.Frame(ventana, bg=BG_COLOR)
     frame_botones.pack(pady=14)
 
